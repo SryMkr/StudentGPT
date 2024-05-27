@@ -42,19 +42,20 @@ client = OpenAI()
 # )
 #
 # fine_tune_response = client.fine_tuning.jobs.create(
-#   training_file=file_response.id,
-#   model="gpt-3.5-turbo",
-#   suffix="StudentAgent"
+#     training_file=file_response.id,
+#     model="gpt-3.5-turbo",
+#     suffix="StudentAgent",
+#     hyperparameters={"batch_size": 4, "n_epochs": 3, "learning_rate_multiplier": 0.05},
 # )
 # print("Fine-tuning job response:", fine_tune_response)
 #
 
 completion = client.chat.completions.create(
-  model="ft:gpt-3.5-turbo-0125:personal:studentagent:9TbYh5oE",
-  messages=[
-    {"role": "system", "content": "You are an assistant specialized in phonetic transcriptions"},
-    {"role": "user", "content": 'l aɪ b r ɛ r i'}
-  ]
+    model="ft:gpt-3.5-turbo-0125:personal:studentagent:9TbYh5oE",
+    messages=[
+        {"role": "system", "content": "You are an assistant specialized in phonetic transcriptions"},
+        {"role": "user", "content": 'l aɪ b r ɛ r i'}
+    ]
 )
 
 print(completion.choices[0].message.content)
