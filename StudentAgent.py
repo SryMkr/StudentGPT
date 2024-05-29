@@ -72,6 +72,7 @@ class StudentAssistant:
             messages = self.client.beta.threads.messages.list(thread_id=thread.id)
             for message in messages:
                 return message.content[0].text.value.lower()
+
         elif run.status == "requires_action":
             # Handle required actions for tool calls
             tool_outputs = []
@@ -80,10 +81,10 @@ class StudentAssistant:
                     # 假设我们需要从 somewhere 获取原始单词和噪声级别
                     messages = self.client.beta.threads.messages.list(thread_id=thread.id)
                     for message in messages:
-                        original_word = message.content[0].text.value.lower()
+                        model_generated_word = message.content[0].text.value.lower()
                         break
                     noise_level = 0.3  # or any appropriate level based on your context
-                    forgotten_word = simulate_forgetting(original_word, noise_level)
+                    forgotten_word = simulate_forgetting(model_generated_word, noise_level)
                     tool_outputs.append({
                         "tool_call_id": tool.id,
                         "output": forgotten_word  # 实际输出是处理过的单词
